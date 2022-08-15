@@ -1,3 +1,5 @@
+from cgitb import reset
+from urllib import request
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -66,10 +68,10 @@ class AdicionarAoCarrinho(View):
             self.request.session["carrinho"] = {}
             self.request.session.save()
 
-        carrinho = self.request.session["carrihno"]
+        carrinho = self.request.session["carrinho"]
 
         if variacao_id in carrinho:
-            quantidade_carrinho = carrinho["variacao_id"]["quantidade"]
+            quantidade_carrinho = carrinho[variacao_id]["quantidade"]
             quantidade_carrinho += 1
 
             if variacao_estoque < quantidade_carrinho:
@@ -105,14 +107,40 @@ class AdicionarAoCarrinho(View):
 
         messages.success(
             self.request,
-            f'Produto {produto_nome} {variacao_nome} adicionado ao seu carrinho.'
+            f'Produto "{produto_nome} {variacao_nome}" adicionado ao seu carrinho.'
         )
 
         return redirect(http_referer)
 
 class RemoverDoCarrinho(View):
     def get(self, *args, **kwargs):
-        return HttpResponse("RemoverDoCarrinho")
+        http_referer = self.request.META.get(
+            "HTTP_REFERER", 
+            reverse("produto:lista")
+        )
+
+        variacao_id = self.request.GET.get("vid")
+
+        if not variacao_id:
+            return redirect(http_referer)
+
+        if not self.request.session.get('carrinho'):
+            return redirect(http_referer)
+
+        if variacao_id not in self.request.session['carrinho']:
+            return redirect(http_referer)
+
+        carrinho = self.request.session['carrinho'][variacao_id]
+
+        messages.success(
+            self.request,
+            f'Produto {carrinho["produto_nome"]} {carrinho["variacao_nome"]} '
+            f'removido do seu carrinho.'
+        )
+
+        del self.request.session['carrinho'][variacao_id]
+        self.request.session.save()
+        return redirect(http_referer)
 
 
 class Carrinho(View):
