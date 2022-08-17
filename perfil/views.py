@@ -111,15 +111,10 @@ class Criar(BasePerfil):
 
         messages.success(
             self.request,
-            "Seu cadastro foi criado ou atualizado com sucesso!"
-        )
-
-        messages.success(
-            self.request,
             "Você fez login e pode concluir sua compra!"
         )
 
-        return redirect('perfil:criar')
+        return redirect('produto:carrinho')
         return self.renderizar
 
 
