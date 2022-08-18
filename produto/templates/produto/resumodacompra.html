@@ -63,13 +63,13 @@
 
 <div class="row mt-3">
     <div class="col">
-        <p class="lead text-center"><span class="font-weight-bold">Total do carrinho {{ carrinho|cart_totals|formata_preco }}</span></p>
+        <p class="lead text-center"><span class="font-weight-bold">Total do carrinho: </span>{{ carrinho|cart_totals|formata_preco }}</p>
     </div>
 </div>
 
 <div class="row">
     <div class="col">
-        <a class="btn btn-block btn-primary btn-lg" href="{% url 'pedido:pagar' %}">
+        <a class="btn btn-block btn-primary btn-lg" href="{% url 'pedido:salvarpedido' %}">
             Realizar pedido e pagar
         </a>
     </div>
