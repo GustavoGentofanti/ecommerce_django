@@ -10,4 +10,4 @@ In addition to, I used SQLite3, SQLite is a C-language library that implements a
 
 ![image](https://user-images.githubusercontent.com/98665008/185813184-2379b306-bb2f-45bc-bf28-97c077e908ae.png) <br />
 
-[Video]()
+[Video](https://www.linkedin.com/feed/update/urn:li:ugcPost:6967613490425413633/)
